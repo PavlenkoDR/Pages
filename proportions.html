@@ -1,1 +1,71 @@
--0,9630252101 -0,8697478992 -0,7220168067 -2,418823529 -1,800672269 -2,177142857 -1,307394958 -0,8694621849
+<html> 
+   <head> 
+      <script> 
+         function recalculate() 
+         { 
+             var h = document.getElementById("height").value
+			 var w = document.getElementById("weight").value 
+			 if ((h > 0) && (w > 0)){
+				document.getElementById("weightPerHeight").innerHTML = w/h
+				document.getElementById("neck").innerHTML = (35.6/0.34-(w/h-0.34)*96.30252101)*(w/h)
+				document.getElementById("biceps").innerHTML = (33.3/0.34-(w/h-0.34)*86.97478992)*(w/h)
+				document.getElementById("forearm").innerHTML = (27.7/0.34-(w/h-0.34)*72.20168067)*(w/h)
+				document.getElementById("chest").innerHTML = (92.5/0.34-(w/h-0.34)*241.8823529)*(w/h)
+				document.getElementById("waist").innerHTML = (69.3/0.34-(w/h-0.34)*180.0672269)*(w/h)
+				document.getElementById("buttocks").innerHTML = (83.3/0.34-(w/h-0.34)*217.7142857)*(w/h)
+				document.getElementById("hip").innerHTML = (50.0/0.34-(w/h-0.34)*130.7394958)*(w/h)
+				document.getElementById("shin").innerHTML = (33.3/0.34-(w/h-0.34)*86.94621849)*(w/h)
+			 }
+         }
+      </script> 
+   </head> 
+	<body onload="javascript:recalculate()"> 
+		<table border="1">
+			<caption>Ideal Body Proportions</caption>
+			<tr> 
+				<td>Weight</th>
+				<td width="100"><input type="text" id="weight" onchange="recalculate()" value="75"/></td> 
+			</tr>
+			<tr> 
+				<td>Height</th>
+				<td width="100"><input type="text" id="height" onchange="recalculate()" value="176"/></td>
+			</tr>
+			<tr> 
+				<td>Weight/Height</th>
+				<td width="100"><div id="weightPerHeight">0</div></td>
+			</tr>
+			<tr> 
+				<td>Neck</th>
+				<td width="100" id="neck">0</td>
+			</tr>
+			<tr> 
+				<td>Biceps</td>
+				<td width="100" id="biceps">0</td>
+			</tr>
+			<tr> 
+				<td>Forearm</td>
+				<td width="100" id="forearm">0</td>
+			</tr>
+			<tr> 
+				<td>Chest</td>
+				<td width="100" id="chest">0</td>
+			</tr>
+			<tr> 
+				<td>Waist</td>
+				<td width="100" id="waist">0</td>
+			</tr>
+			<tr> 
+				<td>Buttocks</td>
+				<td width="100" id="buttocks">0</td>
+			</tr>
+			<tr> 
+				<td>Hip</td>
+				<td width="100" id="hip">0</td>
+			</tr>
+			<tr> 
+				<td>Shin</td>
+				<td width="100" id="shin">0</td>
+			</tr>
+		</table> 
+	</body> 
+</html>
