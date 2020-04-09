@@ -1,70 +1,128 @@
 <html> 
-	<head> 
-		<script> 
-			function recalculate() 
-			{ 
-				var h = document.getElementById("height").value
-				var w = document.getElementById("weight").value 
-				if ((h > 0) && (w > 0)){
-					document.getElementById("weightPerHeight").innerHTML = w/h
-					document.getElementById("neck").innerHTML = (35.6/0.34-(w/h-0.34)*96.30252101)*(w/h)
-					document.getElementById("biceps").innerHTML = (33.3/0.34-(w/h-0.34)*86.97478992)*(w/h)
-					document.getElementById("forearm").innerHTML = (27.7/0.34-(w/h-0.34)*72.20168067)*(w/h)
-					document.getElementById("chest").innerHTML = (92.5/0.34-(w/h-0.34)*241.8823529)*(w/h)
-					document.getElementById("waist").innerHTML = (69.3/0.34-(w/h-0.34)*180.0672269)*(w/h)
-					document.getElementById("buttocks").innerHTML = (83.3/0.34-(w/h-0.34)*217.7142857)*(w/h)
-					document.getElementById("hip").innerHTML = (50.0/0.34-(w/h-0.34)*130.7394958)*(w/h)
-					document.getElementById("shin").innerHTML = (33.3/0.34-(w/h-0.34)*86.94621849)*(w/h)
-				}
-			}
-		</script> 
-	</head> 
-	<body onload="javascript:recalculate()"> 
+   <head> 
+      <script> 
+         function changeElementValue(name, value) 
+         { 
+             var element = document.getElementById(name)
+			 if (element != null){
+				 element.innerHTML = value
+			 }
+         }
+         function recalculate(name, wh, proportions) 
+         { 
+             var h = document.getElementById("height_"+name).value
+			 var w = document.getElementById("weight_"+name).value 
+			 if ((h > 0) && (w > 0)){
+				changeElementValue("weightPerHeight_"+name, w/h)
+				changeElementValue("neck_"    + name, (proportions[0]/wh-(w/h-wh)*96.30252101)*(w/h))
+				changeElementValue("biceps_"  + name, (proportions[1]/wh-(w/h-wh)*86.97478992)*(w/h))
+				changeElementValue("forearm_" + name, (proportions[2]/wh-(w/h-wh)*72.20168067)*(w/h))
+				changeElementValue("chest_"   + name, (proportions[3]/wh-(w/h-wh)*241.8823529)*(w/h))
+				changeElementValue("waist_"   + name, (proportions[4]/wh-(w/h-wh)*180.0672269)*(w/h))
+				changeElementValue("buttocks_"+ name, (proportions[5]/wh-(w/h-wh)*217.7142857)*(w/h))
+				changeElementValue("hip_"     + name, (proportions[6]/wh-(w/h-wh)*130.7394958)*(w/h))
+				changeElementValue("shin_"    + name, (proportions[7]/wh-(w/h-wh)*86.94621849)*(w/h))
+			 }
+         }
+         function init() 
+         { 
+			 recalculate('ideal', 0.34, [35.6, 33.3, 27.7, 92.5, 69.3, 83.3, 50.0, 33.3])
+             recalculate('zein', 0.477272727272, [44, 46, 0, 132, 73, 0, 67, 44])
+         }
+         function recalculateWeight(name, coefficient) 
+         { 
+             var h = document.getElementById("height_"+name).value
+			 document.getElementById("weight_"+name).value = h * coefficient
+         }
+      </script> 
+   </head> 
+	<body onload="javascript:init()"> 
+		<!--ideal-->
 		<table border="1">
-			<caption>Ideal Body Proportions</caption>
-			<tr> 
-				<td>Weight</th>
-				<td width="100"><input type="text" id="weight" onchange="recalculate()" value="99"/></td> 
-			</tr>
+			<caption>Ideal Body Proportions by Joe Weider</caption>
 			<tr> 
 				<td>Height</th>
-				<td width="100"><input type="text" id="height" onchange="recalculate()" value="187"/></td>
+				<td width="100"><input type="text" id="height_ideal" onchange="recalculate('ideal', 0.34, [35.6, 33.3, 27.7, 92.5, 69.3, 83.3, 50.0, 33.3])" value="187"/></td>
+			</tr>
+			<tr> 
+				<td>Weight</th>
+				<td width="100"><input type="text" id="weight_ideal" onchange="recalculate('ideal', 0.34, [35.6, 33.3, 27.7, 92.5, 69.3, 83.3, 50.0, 33.3])" value="99"/></td> 
 			</tr>
 			<tr> 
 				<td>Weight/Height</th>
-				<td width="100"><div id="weightPerHeight">0</div></td>
+				<td width="100"><div id="weightPerHeight_ideal">0</div></td>
 			</tr>
 			<tr> 
 				<td>Neck</th>
-				<td width="100" id="neck">0</td>
+				<td width="100" id="neck_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Biceps</td>
-				<td width="100" id="biceps">0</td>
+				<td width="100" id="biceps_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Forearm</td>
-				<td width="100" id="forearm">0</td>
+				<td width="100" id="forearm_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Chest</td>
-				<td width="100" id="chest">0</td>
+				<td width="100" id="chest_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Waist</td>
-				<td width="100" id="waist">0</td>
+				<td width="100" id="waist_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Buttocks</td>
-				<td width="100" id="buttocks">0</td>
+				<td width="100" id="buttocks_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Hip</td>
-				<td width="100" id="hip">0</td>
+				<td width="100" id="hip_ideal">0</td>
 			</tr>
 			<tr> 
 				<td>Shin</td>
-				<td width="100" id="shin">0</td>
+				<td width="100" id="shin_ideal">0</td>
+			</tr>
+		</table> 
+		<!--frank zein-->
+		<table border="1">
+			<caption>Frank Zein Proportions</caption>
+			<tr> 
+				<td>Height</th>
+				<td width="100"><input type="text" id="height_zein" onchange="recalculateWeight('zein', 0.477272727272);recalculate('zein', 0.477272727272, [44, 46, 0, 132, 73, 0, 67, 44])" value="176"/></td>
+			</tr>
+			<tr> 
+				<td>Weight</th>
+				<td width="100"><input type="text" id="weight_zein" onchange="recalculate('zein', 0.477272727272, [44, 46, 0, 132, 73, 0, 67, 44])" value="84"/></td> 
+			</tr>
+			<tr> 
+				<td>Weight/Height</th>
+				<td width="100"><div id="weightPerHeight_zein">0</div></td>
+			</tr>
+			<tr> 
+				<td>Neck</th>
+				<td width="100" id="neck_zein">0</td>
+			</tr>
+			<tr> 
+				<td>Biceps</td>
+				<td width="100" id="biceps_zein">0</td>
+			</tr>
+			<tr> 
+				<td>Chest</td>
+				<td width="100" id="chest_zein">0</td>
+			</tr>
+			<tr> 
+				<td>Waist</td>
+				<td width="100" id="waist_zein">0</td>
+			</tr>
+			<tr> 
+				<td>Hip</td>
+				<td width="100" id="hip_zein">0</td>
+			</tr>
+			<tr> 
+				<td>Shin</td>
+				<td width="100" id="shin_zein">0</td>
 			</tr>
 		</table> 
 	</body> 
