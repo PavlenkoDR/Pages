@@ -1,0 +1,164 @@
+<html>
+  <head> 
+    <style>
+      label {
+        display: block;
+        width: 130px;
+      }
+      .margin {
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+    </style>
+    <script>
+      function recalculate() 
+      { 
+        var holder = document.getElementById("holder")
+        var tire = document.getElementById("tire").value
+        if (tire < 1){
+          tire = 1
+          document.getElementById("tire").value = 1
+        }
+        
+        var troopsize = document.getElementById("troopsize").value
+        if (troopsize < 1){
+          troopsize = 1
+          document.getElementById("troopsize").value = 1
+        }
+        
+        var shieldpercent = document.getElementById("shieldpercent").value
+        if (shieldpercent < 10){
+          shieldpercent = 10
+          document.getElementById("shieldpercent").value = 10
+        }
+        if (shieldpercent > 100){
+          shieldpercent = 100
+          document.getElementById("shieldpercent").value = 100
+        }
+
+        holder.innerHTML = ""
+        var totalinfantrypercent = 0;
+        var oldroopsize = troopsize
+        for (var i = tire; i > 1; i--) {
+          var infantry = 1;
+          var bowman = 1;
+          var cavalry = 1;
+          if (i >= tire - 1) {
+            var fixedtroopsize = troopsize
+            var infantrypercent = (shieldpercent - 10)
+            infantry = Math.round(infantrypercent / 100 * fixedtroopsize)
+            if (infantry > troopsize){
+              infantry = troopsize
+            }
+            troopsize = troopsize - infantry
+            totalinfantrypercent = totalinfantrypercent + infantry / oldroopsize * 100
+
+            bowman = Math.round((70 - infantrypercent) * 0.4 / 100 * fixedtroopsize)
+            if (bowman  > troopsize){
+              bowman  = troopsize
+            }
+            troopsize = troopsize - bowman 
+
+            cavalry = Math.round((70 - infantrypercent) * 0.6 / 100 * fixedtroopsize)
+            if (cavalry  > troopsize){
+              cavalry  = troopsize
+            }
+            troopsize = troopsize - cavalry 
+          }
+          else if (i == tire - 2){
+            var fixedtroopsize = troopsize
+            if (troopsize > 3 + (tire - 2) * 3){
+              fixedtroopsize = fixedtroopsize - (tire - 2) * 3
+            }
+            if (fixedtroopsize < 0){
+              fixedtroopsize = 0
+            }
+            var infantrypercent = (shieldpercent - totalinfantrypercent)
+            infantry = Math.round(infantrypercent / 100 * oldroopsize)
+            if (infantry > troopsize){
+              infantry = troopsize
+            }
+            troopsize = troopsize - infantry
+            if (troopsize < 0){
+              troopsize = 0
+            }
+            fixedtroopsize = fixedtroopsize - infantry
+
+            bowman = Math.round(fixedtroopsize * 0.4)
+            if (bowman  > troopsize){
+              bowman  = troopsize
+            }
+            troopsize = troopsize - bowman 
+            if (troopsize < 0){
+              troopsize = 0
+            }
+            cavalry = Math.round(fixedtroopsize * 0.6)
+            if (cavalry  > troopsize){
+              cavalry  = troopsize
+            }
+            troopsize = troopsize - cavalry 
+            if (troopsize < 0){
+              troopsize = 0
+            }
+          }
+          else{
+            if (infantry > troopsize){
+              infantry = troopsize
+            }
+            troopsize = troopsize - infantry
+
+            if (bowman  > troopsize){
+              bowman  = troopsize
+            }
+            troopsize = troopsize - bowman 
+
+            if (cavalry  > troopsize){
+              cavalry  = troopsize
+            }
+            troopsize = troopsize - cavalry 
+          }
+
+          var newTr = document.createElement("tr")
+          newTr.innerHTML = "<td>" + i + "</td><td>" + infantry + "</td><td>" + bowman + "</td><td>" + cavalry + "</td>"
+          holder.appendChild(newTr)
+        }
+      }
+      function init() 
+      { 
+        recalculate() 
+      }
+    </script> 
+  </head> 
+  <body onload="javascript:init()"> 
+    <div class="margin">King of Avalon PVP калькулятор</div>
+    <div class="margin">
+      <div>
+        <label>Уровень войск</label>
+        <input type="text" id="tire" onchange="recalculate()" value="10">
+      </div>
+      <div>
+        <label>Количество войск</label>
+        <input type="text" id="troopsize" onchange="recalculate()" value="100000">
+      </div>
+      <div>
+        <label>Процент пехоты</label>
+        <input value="40" onchange="recalculate()" id="shieldpercent" type="text">
+      </div>
+    </div>
+    <div class="margin">
+      <table border="1">
+        <tbody>
+          <tr> 
+            <td width="100">Уровень</td>
+            <td width="100">Пехота</td>
+            <td width="100">Кавалерия</td>
+            <td width="100">Стрелки</td>
+          </tr>
+          <tbody id="holder">
+          </tbody>
+        </tbody>
+    </table> 
+    </div>
+    <div class="margin">By NellOne. Королевство Солар 10014. Клан FSB</div>
+  </body>
+</html>
